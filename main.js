@@ -9,7 +9,6 @@ var Game = {
 
     /**
      * 数据初始化（全是0）
-     * @private
      */
     _dataInit(){
         let x = this.config.x, y;
@@ -43,7 +42,6 @@ var Game = {
      * 指定范围生成随机整数
      * @param min
      * @param max
-     * @private
      */
     _random(min, max){
         return ~~(Math.random() * (max - min + 1) + min);
@@ -51,7 +49,6 @@ var Game = {
 
     /**
      * 寻找随机的空格子
-     * @private
      */
     _findEmptyBox(){
         let y = this.config.y;
@@ -133,7 +130,6 @@ var Game = {
          * 查找及合并下一个可以合并的数字
          * @param pointerX
          * @param pointerY
-         * @private
          */
         let _sumWithNext = (pointerX, pointerY)=> {
             for (let newPointer = pointerY + 1; newPointer < y; newPointer++) {
@@ -188,7 +184,6 @@ var Game = {
          * 查找及合并下一个可以合并的数字
          * @param pointerX
          * @param pointerY
-         * @private
          */
         let _sumWithNext = (pointerX, pointerY)=> {
             for (let newPointer = pointerY - 1; newPointer >= 0; newPointer--) {
@@ -236,7 +231,6 @@ var Game = {
          * 查找及合并下一个可以合并的数字
          * @param pointerX
          * @param pointerY
-         * @private
          */
         let _sumWithNext = (pointerX, pointerY)=> {
             for (let newPointer = pointerX + 1; newPointer < x; newPointer++) {
@@ -284,7 +278,6 @@ var Game = {
          * 查找及合并下一个可以合并的数字
          * @param pointerX
          * @param pointerY
-         * @private
          */
         let _sumWithNext = (pointerX, pointerY)=> {
             for (let newPointer = pointerX - 1; newPointer >= 0; newPointer--) {
