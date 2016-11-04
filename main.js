@@ -6,6 +6,7 @@ var Game = {
         y: 4  //列
     },
     data: [],
+    isOver: false,
 
     /**
      * 数据初始化（全是0）
@@ -335,6 +336,11 @@ var Game = {
      */
     event(){
         document.addEventListener('keydown', (e)=> {
+            if (this.isOver) {
+                this._gameOver();
+                return;
+            }
+            
             if (e.which === 37 || e.which === 38 || e.which === 39 || e.which === 40) {
                 let oldStatus = JSON.stringify(this.data);
                 switch (e.which) {
@@ -360,10 +366,11 @@ var Game = {
                 let newStatus = JSON.stringify(this.data);
                 //移动前和移动后不一致,说明有挪动的格子,此时需要增加随机格子
                 if (oldStatus !== newStatus) this._randomNum();
-                //打印效果
-                this.printArray();
+
                 //判断是否还可以移动
-                !this._canMove() && this._gameOver();
+                this.isOver = !this._canMove();
+
+                this.printArray();
             }
 
         }, false);
