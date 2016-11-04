@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    color: #333;
+}
+
+.bg {
+    position: relative;
+    display: inline-block;
+    margin: 50px;
+    background: #bbada0;
+    border-radius: 6px;
+}
+
+.layer1 {
+    position: relative;
+    padding: 5px;
+}
+
+.layer2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 5px;
+}
+
+.box {
+    display: inline-block;
+    margin: 5px;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    font-size: 55px;
+    text-align: center;
+    border-radius: 6px;
+    vertical-align: top;
+    color: #776e65;
+}
+
+.layer1 .box {
+    background: rgba(238, 228, 218, 0.35);
+}
+
+.layer2 .box[data-value="2"] {
+    background: #eee4da;
+
+}
+
+.layer2 .box[data-value="4"] {
+    background: #ede0c8;
+}
+
+.layer2 .box[data-value="8"] {
+    color: #f9f6f2;
+    background: #f2b179;
+}
+
+.layer2 .box[data-value="16"] {
+    color: #f9f6f2;
+    background: #f59563;
+}
+
+.layer2 .box[data-value="32"] {
+    color: #f9f6f2;
+    background: #f67c5f;
+}
+
+.layer2 .box[data-value="64"] {
+    color: #f9f6f2;
+    background: #f65e3b;
+}
+
+.layer2 .box[data-value="128"] {
+    color: #f9f6f2;
+    background: #edcf72;
+    font-size: 45px;
+}
+
+.layer2 .box[data-value="256"] {
+    color: #f9f6f2;
+    background: #edcc61;
+    font-size: 45px;
+}
+
+.layer2 .box[data-value="512"] {
+    color: #f9f6f2;
+    background: #edc850;
+    font-size: 45px;
+}
+
+.layer2 .box[data-value="1024"] {
+    color: #f9f6f2;
+    background: #edc53f;
+    font-size: 35px;
+}
+
+.layer2 .box[data-value="2048"] {
+    color: #f9f6f2;
+    background: #edc22e;
+    font-size: 35px;
+}
+
+.layer2 .box[data-value="4096"] {
+    color: #f9f6f2;
+    background: #666;
+    font-size: 35px;
+}
+
+.layer2 .box[data-value="8192"] {
+    color: #f9f6f2;
+    background: #333;
+    font-size: 35px;
+}
+
+.extra {
+    margin: 0 50px;
+    padding: 10px;
+    width: 400px;
+    border: 2px dashed #999;
+}
+
+.extra .tips {
+    font-size: 26px;
+    color: #c00;
+    text-align: center;
+}
+
+.extra .btns {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.extra .btns button {
+    padding: 4px;
+    font-size: 20px;
+}

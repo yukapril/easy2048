@@ -6,7 +6,9 @@ var Game = {
         y: 4  //列
     },
     data: [],
+    boxes: [],
     isOver: false,
+    score: 0,
 
     /**
      * 数据初始化（全是0）
@@ -64,7 +66,7 @@ var Game = {
         var rnd = this._random(0, listNotZeroLength - 1);//0~15
         //计算编号对应的真实坐标位置
         let count = 0;//1~16
-        var i = list.findIndex((value)=> {
+        var i = list.findIndex(value => {
             value === 0 && count++;
             return count - 1 === rnd;
         });
@@ -111,6 +113,7 @@ var Game = {
      */
     _gameOver(){
         console.log('游戏结束');
+        document.querySelector('#J_Tips').innerText = '游戏结束';
     },
 
     /**
@@ -318,29 +321,27 @@ var Game = {
     /**
      * 启动函数
      */
-    start(){
+    init(){
+        this.isOver = false;
+        this.score = 0;
+        document.querySelector('#J_Tips').innerText = '';
         this._dataInit();
         //随机生成2个位置数字
         this._randomNum();
         this._randomNum();
-    },
-
-    /**
-     * 重置游戏
-     */
-    reset(){
+        this.render();
     },
 
     /**
      * 键盘事件绑定
      */
     event(){
-        document.addEventListener('keydown', (e)=> {
+        document.addEventListener('keydown', e => {
             if (this.isOver) {
                 this._gameOver();
                 return;
             }
-            
+
             if (e.which === 37 || e.which === 38 || e.which === 39 || e.which === 40) {
                 let oldStatus = JSON.stringify(this.data);
                 switch (e.which) {
@@ -370,27 +371,80 @@ var Game = {
                 //判断是否还可以移动
                 this.isOver = !this._canMove();
 
-                this.printArray();
+                this.render();
             }
 
         }, false);
+
+
+        document.querySelector('#J_Start').addEventListener('click', e => {
+            this.init();
+        }, false);
+
+
     },
 
-    createGrid(){
+    /**
+     * 建立页面网格
+     * @param selector
+     */
+    createGrid(selector){
+        let el = document.querySelector(selector);
+
+        let l1temp = '';
+        let l1temp2 = '';
+        for (let i = 0; i < this.config.y; i++) l1temp += '<div class="box"></div>';
+        for (let i = 0; i < this.config.x; i++) l1temp2 += '<div class="line">' + l1temp + '</div>';
+
+        let l2temp = '';
+        let l2temp2 = '';
+        for (let i = 0; i < this.config.y; i++) l2temp += '<div class="box"></div>';
+        for (let i = 0; i < this.config.x; i++) l2temp2 += '<div class="line">' + l2temp + '</div>';
+
+        el.innerHTML = '<div class="bg"><div class="layer1">' + l1temp2 + '</div><div class="layer2" id="J_Boxes">' + l2temp2 + '</div></div>';
+
+        let lines = document.querySelectorAll('#J_Boxes .line');
+        lines.forEach(line => {
+            let arr = [];
+            line.querySelectorAll('.box').forEach(box => {
+                arr.push(box);
+            });
+            this.boxes.push(arr);
+        });
+
     },
+
+    /**
+     * 页面渲染
+     */
     render(){
+        this.data.forEach((x, indexX) => {
+            x.forEach((y, indexY) => {
+                let curBox = this.boxes[indexX][indexY];
+                //清理数据
+                curBox.innerText = '';
+                curBox.dataset.value = '';
+                //渲染新数据
+                if (y === 0) return;
+                curBox.innerText = y;
+                curBox.dataset.value = y;
+            });
+        });
+
+
+        this.printArray();
+
     },
 
     printArray(){
-        console.log(this.data.reduce((p, n)=> p += n.join('\t\t') + '\n\n', ''));
+        console.log(this.data.reduce((p, n)=> (p += n.join('\t\t') + '\n\n', p), ''));
     }
 };
 
 
 window.onload = () => {
-    Game.createGrid();
-    Game.start();
+    Game.createGrid('#J_Body');
+    Game.init();
     Game.event();
-    Game.printArray();
 };
 
