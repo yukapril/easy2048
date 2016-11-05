@@ -7,6 +7,8 @@ var Game = {
     },
     data: [],
     boxes: [],
+    elScore: null,
+    elTips: null,
     isOver: false,
     score: 0,
 
@@ -113,7 +115,7 @@ var Game = {
      */
     _gameOver(){
         console.log('游戏结束');
-        document.querySelector('#J_Tips').innerText = '游戏结束';
+        this.elTips.innerText = '游戏结束';
     },
 
     /**
@@ -137,9 +139,16 @@ var Game = {
          */
         let _sumWithNext = (pointerX, pointerY)=> {
             for (let newPointer = pointerY + 1; newPointer < y; newPointer++) {
-                if (this.data[pointerX][newPointer] === this.data[pointerX][pointerY]) {
-                    this.data[pointerX][pointerY] = this.data[pointerX][pointerY] * 2;
-                    this.data[pointerX][newPointer] = 0;
+                if (this.data[pointerX][newPointer] === 0) {
+                    //如果是0,继续查找
+                    continue;
+                } else {
+                    //不是0,比较操作后,跳出循环
+                    if (this.data[pointerX][newPointer] === this.data[pointerX][pointerY]) {
+                        this.data[pointerX][pointerY] = this.data[pointerX][pointerY] * 2;
+                        this.data[pointerX][newPointer] = 0;
+                        this.score += this.data[pointerX][pointerY];
+                    }
                     break;
                 }
             }
@@ -191,9 +200,16 @@ var Game = {
          */
         let _sumWithNext = (pointerX, pointerY)=> {
             for (let newPointer = pointerY - 1; newPointer >= 0; newPointer--) {
-                if (this.data[pointerX][newPointer] === this.data[pointerX][pointerY]) {
-                    this.data[pointerX][pointerY] = this.data[pointerX][pointerY] * 2;
-                    this.data[pointerX][newPointer] = 0;
+                if (this.data[pointerX][newPointer] === 0) {
+                    //如果是0,继续查找
+                    continue;
+                } else {
+                    //不是0,比较操作后,跳出循环
+                    if (this.data[pointerX][newPointer] === this.data[pointerX][pointerY]) {
+                        this.data[pointerX][pointerY] = this.data[pointerX][pointerY] * 2;
+                        this.data[pointerX][newPointer] = 0;
+                        this.score += this.data[pointerX][pointerY];
+                    }
                     break;
                 }
             }
@@ -238,9 +254,16 @@ var Game = {
          */
         let _sumWithNext = (pointerX, pointerY)=> {
             for (let newPointer = pointerX + 1; newPointer < x; newPointer++) {
-                if (this.data[newPointer][pointerY] === this.data[pointerX][pointerY]) {
-                    this.data[pointerX][pointerY] = this.data[pointerX][pointerY] * 2;
-                    this.data[newPointer][pointerY] = 0;
+                if (this.data[pointerX][newPointer] === 0) {
+                    //如果是0,继续查找
+                    continue;
+                } else {
+                    //不是0,比较操作后,跳出循环
+                    if (this.data[newPointer][pointerY] === this.data[pointerX][pointerY]) {
+                        this.data[pointerX][pointerY] = this.data[pointerX][pointerY] * 2;
+                        this.data[newPointer][pointerY] = 0;
+                        this.score += this.data[pointerX][pointerY];
+                    }
                     break;
                 }
             }
@@ -285,9 +308,16 @@ var Game = {
          */
         let _sumWithNext = (pointerX, pointerY)=> {
             for (let newPointer = pointerX - 1; newPointer >= 0; newPointer--) {
-                if (this.data[newPointer][pointerY] === this.data[pointerX][pointerY]) {
-                    this.data[pointerX][pointerY] = this.data[pointerX][pointerY] * 2;
-                    this.data[newPointer][pointerY] = 0;
+                if (this.data[pointerX][newPointer] === 0) {
+                    //如果是0,继续查找
+                    continue;
+                } else {
+                    //不是0,比较操作后,跳出循环
+                    if (this.data[newPointer][pointerY] === this.data[pointerX][pointerY]) {
+                        this.data[pointerX][pointerY] = this.data[pointerX][pointerY] * 2;
+                        this.data[newPointer][pointerY] = 0;
+                        this.score += this.data[pointerX][pointerY];
+                    }
                     break;
                 }
             }
@@ -324,7 +354,7 @@ var Game = {
     init(){
         this.isOver = false;
         this.score = 0;
-        document.querySelector('#J_Tips').innerText = '';
+        this.elTips.innerText = '';
         this._dataInit();
         //随机生成2个位置数字
         this._randomNum();
@@ -412,6 +442,8 @@ var Game = {
             this.boxes.push(arr);
         });
 
+        this.elScore = document.querySelector('#J_Score');
+        this.elTips = document.querySelector('#J_Tips');
     },
 
     /**
@@ -431,6 +463,7 @@ var Game = {
             });
         });
 
+        this.elScore.innerText = this.score;
 
         this.printArray();
 
